@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Mamãe & Bebê – Introdução Alimentar</title>
+  <meta name="description" content="Guia de introdução alimentar para bebês" />
+  <meta name="theme-color" content="#FFB347" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Mamãe & Bebê" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #FFF8F0;
+      --peach: #FFB347;
+      --sage: #7CB99A;
+      --blush: #F4A0A0;
+      --lavender: #C9B8E8;
+      --sky: #8EC8E8;
+      --warm: #F5E6D3;
+      --dark: #3D2B1F;
+      --mid: #8B6B52;
+      --light: #FFF0E6;
+      --white: #fff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    ::-webkit-scrollbar { display: none; }
+    body {
+      font-family: 'Nunito', system-ui, sans-serif;
+      background: var(--cream);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+    #app {
+      width: 100%;
+      max-width: 430px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      background: var(--cream);
+    }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+    input { font-family: inherit; }
+
+    @keyframes pop { 0%{transform:scale(0.8);opacity:0} 100%{transform:scale(1);opacity:1} }
+    @keyframes slideUp { 0%{transform:translateY(20px);opacity:0} 100%{transform:translateY(0);opacity:1} }
+    @keyframes fadeIn { 0%{opacity:0} 100%{opacity:1} }
+    .card { animation: slideUp 0.3s ease forwards; }
+
+    /* Header */
+    .header {
+      background: linear-gradient(135deg, var(--peach), var(--blush));
+      padding: 20px 20px 28px;
+      border-radius: 0 0 28px 28px;
+      position: relative;
+      overflow: hidden;
+    }
+    .header-circle1 {
+      position: absolute; top: -20px; right: -20px;
+      width: 120px; height: 120px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+    }
+    .header-circle2 {
+      position: absolute; bottom: -30px; left: 40px;
+      width: 80px; height: 80px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 50%;
+    }
+    .header-row { display: flex; justify-content: space-between; align-items: center; position: relative; }
+    .header-sub { font-size: 12px; color: rgba(255,255,255,0.8); font-weight: 700; letter-spacing: 1px; }
+    .header-title { font-family: 'Baloo 2', cursive; font-size: 26px; color: #fff; font-weight: 800; line-height: 1.1; }
+    .header-badge {
+      background: rgba(255,255,255,0.25);
+      border-radius: 20px;
+      padding: 6px 14px;
+      color: #fff;
+      font-weight: 800;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    /* Content */
+    .content { flex: 1; overflow-y: auto; padding: 16px 16px 90px; animation: fadeIn 0.3s ease; }
+
+    /* Labels */
+    .section-label {
+      font-size: 11px; font-weight: 800; color: var(--mid);
+      letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase;
+    }
+
+    /* Age pills */
+    .age-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 20px; }
+    .age-pill {
+      flex-shrink: 0; padding: 8px 14px; border-radius: 20px;
+      font-weight: 800; font-size: 12px;
+      transition: all 0.2s;
+    }
+
+    /* Tip grid */
+    .tip-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+    .tip-card {
+      background: var(--white); border-radius: 18px;
+      padding: 14px 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      animation: slideUp 0.3s ease forwards;
+    }
+    .tip-card p { font-size: 13px; font-weight: 700; color: var(--dark); line-height: 1.3; }
+
+    /* Food pills */
+    .food-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .food-pill { padding: 6px 12px; border-radius: 14px; font-size: 13px; font-weight: 700; color: var(--dark); }
+    .foods-card {
+      background: var(--white); border-radius: 20px;
+      padding: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); margin-bottom: 20px;
+    }
+
+    /* Recipe scroll */
+    .recipe-scroll { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 4px; }
+    .recipe-mini {
+      flex-shrink: 0; background: var(--white); border-radius: 20px;
+      padding: 16px; width: 150px; text-align: left;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    .recipe-mini-emoji { font-size: 32px; margin-bottom: 8px; }
+    .recipe-mini-name { font-size: 14px; font-weight: 800; color: var(--dark); margin-bottom: 4px; }
+    .recipe-mini-sub { font-size: 11px; color: var(--mid); font-weight: 600; }
+
+    /* Weekly menu */
+    .week-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; margin-bottom: 14px; }
+    .week-tab {
+      flex-shrink: 0; padding: 7px 13px; border-radius: 16px;
+      font-weight: 800; font-size: 11px;
+      transition: all 0.2s; white-space: nowrap;
+    }
+    .menu-card {
+      background: var(--white); border-radius: 20px;
+      padding: 16px; margin-bottom: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .menu-meal-title {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 800; color: var(--dark); font-size: 14px;
+      margin-bottom: 8px;
+    }
+    .menu-meal-icon { font-size: 20px; }
+    .menu-item {
+      font-size: 13px; font-weight: 600; color: var(--dark);
+      padding: 5px 0; border-bottom: 1px solid var(--warm);
+      line-height: 1.4;
+    }
+    .menu-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .menu-fruit {
+      font-size: 12px; font-weight: 700;
+      color: var(--sage); margin-top: 3px;
+    }
+
+    /* Diary */
+    .days-row { display: flex; gap: 6px; margin-bottom: 20px; justify-content: space-between; }
+    .day-btn {
+      flex: 1; padding: 8px 4px; border-radius: 14px;
+      font-weight: 800; font-size: 11px;
+      transition: all 0.2s;
+    }
+    .meal-card {
+      background: var(--white); border-radius: 20px;
+      padding: 16px; margin-bottom: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+    .meal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .meal-title-row { display: flex; align-items: center; gap: 8px; }
+    .meal-title { font-weight: 800; color: var(--dark); font-size: 15px; }
+    .add-btn {
+      background: var(--peach); color: #fff;
+      width: 30px; height: 30px; border-radius: 50%;
+      font-size: 20px; display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 10px rgba(255,179,71,0.4);
+      font-weight: 800; line-height: 1;
+    }
+    .food-tag {
+      background: var(--warm); color: var(--dark);
+      padding: 5px 10px; border-radius: 12px;
+      font-size: 12px; font-weight: 700;
+      display: inline-flex; align-items: center; gap: 4px;
+    }
+    .remove-btn { color: var(--blush); font-size: 14px; font-weight: 900; line-height: 1; }
+    .food-tags-wrap { display: flex; flex-wrap: wrap; gap: 6px; }
+    .empty-msg { font-size: 12px; color: #ccc; font-weight: 600; }
+
+    /* Recipe list */
+    .recipe-row {
+      width: 100%; background: var(--white); border-radius: 20px;
+      padding: 16px; margin-bottom: 10px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+      display: flex; align-items: center; gap: 14px;
+      text-align: left;
+    }
+    .recipe-row-emoji { font-size: 36px; }
+    .recipe-row-name { font-weight: 800; color: var(--dark); font-size: 15px; margin-bottom: 3px; }
+    .recipe-row-sub { font-size: 12px; color: var(--mid); font-weight: 600; }
+    .recipe-arrow { color: var(--mid); font-size: 18px; }
+    .filter-row { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; }
+    .filter-pill {
+      flex-shrink: 0; padding: 6px 12px; border-radius: 16px;
+      font-weight: 700; font-size: 11px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      transition: all 0.2s;
+      white-space: nowrap;
+    }
+
+    /* Recipe detail */
+    .recipe-detail-card {
+      background: var(--white); border-radius: 24px;
+      padding: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+    .recipe-detail-center { text-align: center; margin-bottom: 20px; }
+    .recipe-detail-emoji { font-size: 56px; }
+    .recipe-detail-name { font-family: 'Baloo 2', cursive; font-size: 24px; color: var(--dark); margin-top: 8px; }
+    .recipe-detail-sub { font-size: 13px; color: var(--mid); font-weight: 600; margin-top: 4px; }
+    .step-row {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 12px;
+      padding: 12px 14px; background: var(--warm); border-radius: 14px;
+    }
+    .step-num {
+      color: #fff; width: 26px; height: 26px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 900; flex-shrink: 0;
+    }
+    .step-text { font-size: 14px; font-weight: 700; color: var(--dark); }
+    .add-diary-btn {
+      width: 100%; margin-top: 20px;
+      background: linear-gradient(135deg, var(--peach), var(--blush));
+      color: #fff; padding: 14px; border-radius: 16px;
+      font-weight: 800; font-size: 14px;
+      box-shadow: 0 6px 16px rgba(255,179,71,0.4);
+    }
+    .back-btn { display: flex; align-items: center; gap: 6px; color: var(--mid); font-weight: 700; font-size: 14px; margin-bottom: 16px; }
+
+    /* Tips */
+    .avoid-card {
+      background: linear-gradient(135deg, rgba(124,185,154,0.13), rgba(142,200,232,0.13));
+      border-radius: 20px; padding: 16px; margin-bottom: 16px;
+      border: 2px solid rgba(124,185,154,0.27);
+    }
+    .avoid-title { font-weight: 800; color: var(--dark); font-size: 14px; margin-bottom: 4px; }
+    .avoid-pills { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+    .avoid-pill { background: rgba(244,160,160,0.27); color: var(--dark); padding: 5px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; }
+    .tips-card { background: var(--white); border-radius: 20px; padding: 16px; margin-bottom: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+    .tips-card-header { display: flex; align-items: center; gap: 8px; margin-bottom: 12px; }
+    .tips-card-title { font-weight: 800; color: var(--dark); font-size: 15px; }
+    .tips-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .tips-item { border-radius: 12px; padding: 8px 10px; border-left-width: 3px; border-left-style: solid; }
+    .tips-item p { font-size: 12px; font-weight: 700; color: var(--dark); }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(61,43,31,0.5);
+      display: flex; align-items: flex-end; z-index: 100;
+    }
+    .modal-box {
+      background: #fff; border-radius: 24px 24px 0 0;
+      padding: 24px; width: 100%; max-width: 430px;
+      margin: 0 auto; animation: slideUp 0.3s ease;
+    }
+    .modal-title { font-weight: 800; color: var(--dark); font-size: 16px; margin-bottom: 4px; }
+    .modal-sub { font-size: 12px; color: var(--mid); font-weight: 600; margin-bottom: 16px; }
+    .modal-input {
+      width: 100%; padding: 12px 16px;
+      border-radius: 14px; border: 2px solid var(--peach);
+      font-size: 14px; font-weight: 600; color: var(--dark);
+      outline: none; margin-bottom: 16px;
+      background: var(--warm);
+    }
+    .modal-btns { display: flex; gap: 10px; }
+    .modal-cancel { flex: 1; padding: 14px; border-radius: 14px; background: var(--warm); color: var(--mid); font-weight: 800; font-size: 14px; }
+    .modal-save {
+      flex: 1; padding: 14px; border-radius: 14px;
+      background: linear-gradient(135deg, var(--peach), var(--blush));
+      color: #fff; font-weight: 800; font-size: 14px;
+      box-shadow: 0 4px 12px rgba(255,179,71,0.4);
+    }
+
+    /* Bottom nav */
+    .bottom-nav {
+      position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+      width: 100%; max-width: 430px;
+      background: var(--white);
+      border-top: 1px solid #f0e8e0;
+      display: flex;
+      padding: 10px 0 20px;
+      box-shadow: 0 -8px 30px rgba(0,0,0,0.08);
+      z-index: 50;
+    }
+    .nav-btn {
+      flex: 1; display: flex; flex-direction: column;
+      align-items: center; gap: 4; transition: all 0.2s;
+      position: relative;
+    }
+    .nav-btn.active { transform: translateY(-4px); }
+    .nav-icon { font-size: 24px; transition: all 0.2s; }
+    .nav-icon.inactive { filter: grayscale(1) opacity(0.4); }
+    .nav-label { font-size: 10px; font-weight: 800; transition: color 0.2s; }
+    .nav-dot {
+      position: absolute; bottom: -6px;
+      width: 4px; height: 4px;
+      background: var(--peach); border-radius: 50%;
+    }
+
+    .no-results { text-align: center; padding: 40px; }
+    .no-results-emoji { font-size: 36px; }
+    .no-results-text { font-weight: 700; color: var(--mid); margin-top: 10px; }
+    .only-milk { font-size: 13px; color: var(--mid); font-weight: 600; padding: 4px; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script>
+  // ─── Data ───────────────────────────────────────────────────────────────────
+  const palette = {
+    cream:"#FFF8F0", peach:"#FFB347", sage:"#7CB99A", blush:"#F4A0A0",
+    lavender:"#C9B8E8", sky:"#8EC8E8", warm:"#F5E6D3", dark:"#3D2B1F",
+    mid:"#8B6B52", light:"#FFF0E6",
+  };
+
+  const mealIcons  = { cafe:"🌅", almoco:"☀️", lanche:"🍎", jantar:"🌙" };
+  const mealLabels = { cafe:"Café da Manhã", almoco:"Almoço", lanche:"Lanche da Tarde", jantar:"Jantar" };
+  const weekDayNames = ["Segunda","Terça","Quarta","Quinta","Sexta","Sábado","Domingo"];
+
+  const ageTips = {
+    "0-3": {
+      label:"0–3 meses", color:palette.sky,
+      tips:[
+        "O leite materno é o alimento completo e ideal nessa fase",
+        "Ainda não é necessário oferecer água ou outros líquidos",
+        "Alimente em livre demanda — sempre que o bebê pedir",
+        "Certifique-se de que a pega está correta para uma amamentação confortável"
+      ],
+      foods:[]
+    },
+    "4-5": {
+      label:"4–5 meses", color:palette.lavender,
+      tips:[
+        "O leite materno ainda supre todas as necessidades do bebê",
+        "Fique atenta aos sinais de prontidão para a introdução alimentar",
+        "O bebê já consegue sentar com apoio? Isso é um bom sinal!",
+        "Interesse e curiosidade pela comida dos adultos são indicativos positivos"
+      ],
+      foods:[]
+    },
+    "6-8": {
+      label:"6–8 meses", color:palette.sage,
+      tips:[
+        "É o momento ideal para iniciar as primeiras papas e purês",
+        "Ofereça alimentos bem amassados ou em consistência pastosa",
+        "Comece com uma refeição por dia e vá aumentando gradualmente",
+        "Evite completamente sal, açúcar e temperos industrializados"
+      ],
+      foods:[
+        "🥕 Cenoura","🥔 Batata","🍠 Batata-doce","🎃 Abóbora","🥦 Brócolis",
+        "🥒 Abobrinha","🍌 Banana","🍎 Maçã cozida","🍐 Pera","🥑 Abacate",
+        "🌽 Milho","🍠 Inhame","🥬 Espinafre","🫛 Ervilha","🍚 Arroz",
+        "🥣 Aveia","🐟 Peixe branco","🫘 Feijão","🍗 Frango"
+      ]
+    },
+    "9-11": {
+      label:"9–11 meses", color:palette.peach,
+      tips:[
+        "Evolua para texturas em pedaços macios — o bebê já está pronto!",
+        "Ofereça três refeições principais por dia além do leite",
+        "Incentive o finger food: pedacinhos que o bebê pega sozinho",
+        "Explore novos sabores e combinações com criatividade"
+      ],
+      foods:[
+        "🍗 Frango desfiado","🐟 Peixe em lascas","🥚 Ovo mexido","🧀 Queijo branco",
+        "🫘 Feijão amassado","🥜 Lentilha","🍝 Macarrão mole","🥦 Brócolis cozido",
+        "🥕 Cenoura em palitinhos","🍠 Batata-doce assada","🍌 Banana em pedaços",
+        "🫐 Mirtilo (inteiro cortado)","🍓 Morango","🥑 Abacate","🌾 Arroz integral",
+        "🍞 Pão integral","🥛 Iogurte natural","🫙 Tahine","🌿 Tofu"
+      ]
+    },
+    "12-24": {
+      label:"12–24 meses", color:palette.blush,
+      tips:[
+        "O bebê já pode participar das refeições em família à mesa",
+        "Ofereça a mesma comida de todos, com pouco ou nenhum tempero",
+        "Mantenha o leite materno ou fórmula — ele ainda é muito importante",
+        "Evite ultraprocessados, embutidos, refrigerantes e achocolatados"
+      ],
+      foods:[
+        "🍖 Carnes variadas","🐟 Peixes e frutos do mar","🥚 Ovos de todas as formas",
+        "🧀 Queijos variados","🥛 Iogurte natural","🫘 Grãos e leguminosas",
+        "🥦 Todos os legumes","🍅 Tomate","🧅 Cebola refogada","🧄 Alho",
+        "🌿 Ervas frescas","🍋 Limão","🫒 Azeite","🌾 Grãos integrais",
+        "🍞 Pão integral","🥑 Abacate","🫐 Frutas silvestres","🍓 Morango",
+        "🍇 Uva (cortada)","🍑 Pêssego","🥭 Manga","🍍 Abacaxi"
+      ]
+    },
+  };
+
+  // ─── CARDÁPIO SEMANAL POR FASE ───────────────────────────────────────────────
+  const weeklyMenus = {
+    "6-8": [
+      {
+        day:"Segunda",
+        cafe:{ main:"Papa de banana com aveia fina", fruit:"🍐 Pera amassada como sobremesa" },
+        almoco:{ main:"Purê de batata-doce com abobrinha cozida e um fio de azeite" },
+        lanche:{ main:"Abacate amassado com um toque de limão", fruit:"🍌 Banana em purê" },
+        jantar:{ main:"Papa de abóbora com cenoura bem amassada e azeite" }
+      },
+      {
+        day:"Terça",
+        cafe:{ main:"Purê de maçã cozida com aveia", fruit:"🍌 Banana amassada" },
+        almoco:{ main:"Papa de feijão com batata e cenoura, bem amassado" },
+        lanche:{ main:"Pera cozida amassada com um fio de leite materno", fruit:"🥑 Abacate cremoso" },
+        jantar:{ main:"Papa de inhame com brócolis amassado e azeite" }
+      },
+      {
+        day:"Quarta",
+        cafe:{ main:"Banana amassada com aveia fina hidratada em leite materno", fruit:"🍎 Maçã cozida" },
+        almoco:{ main:"Frango cozido e desfiado fino misturado com purê de batata" },
+        lanche:{ main:"Abacate amassado com leite materno", fruit:"🍐 Pera cozida amassada" },
+        jantar:{ main:"Papa de ervilha com abobrinha e uma colher de azeite" }
+      },
+      {
+        day:"Quinta",
+        cafe:{ main:"Purê de maçã com canela (pitada pequena)", fruit:"🍌 Banana amassada" },
+        almoco:{ main:"Papa de peixe branco cozido com batata-doce e cenoura" },
+        lanche:{ main:"Banana amassada com aveia", fruit:"🥑 Abacate puro" },
+        jantar:{ main:"Purê de abóbora com arroz bem cozido e azeite" }
+      },
+      {
+        day:"Sexta",
+        cafe:{ main:"Aveia cozida em leite materno com banana amassada", fruit:"🍎 Maçã cozida" },
+        almoco:{ main:"Frango desfiado com purê de batata e espinafre amassado" },
+        lanche:{ main:"Pera madura amassada", fruit:"🍌 Banana com aveia" },
+        jantar:{ main:"Papa de milho com abobrinha e cenoura amassados" }
+      },
+      {
+        day:"Sábado",
+        cafe:{ main:"Banana amassada com abacate em creme", fruit:"🍐 Pera cozida" },
+        almoco:{ main:"Risoto de frango desfiado com cenoura bem macio" },
+        lanche:{ main:"Abacate cremoso com leite materno", fruit:"🍎 Maçã cozida amassada" },
+        jantar:{ main:"Papa de batata-doce com brócolis e azeite extra virgem" }
+      },
+      {
+        day:"Domingo",
+        cafe:{ main:"Purê de pera com aveia fina", fruit:"🍌 Banana amassada" },
+        almoco:{ main:"Peixe branco ao vapor com purê de batata e abobrinha" },
+        lanche:{ main:"Banana com aveia hidratada", fruit:"🥑 Abacate puro" },
+        jantar:{ main:"Papa de abóbora com feijão amassado e azeite" }
+      }
+    ],
+    "9-11": [
+      {
+        day:"Segunda",
+        cafe:{ main:"Mingau de aveia com leite materno e banana em pedacinhos", fruit:"🍓 Morango cortado em quartos" },
+        almoco:{ main:"Frango desfiado com arroz mole, feijão amassado e cenoura cozida" },
+        lanche:{ main:"Iogurte natural com fruta amassada", fruit:"🫐 Mirtilos cortados ao meio" },
+        jantar:{ main:"Macarrão mole com frango desfiado e molho de tomate caseiro" }
+      },
+      {
+        day:"Terça",
+        cafe:{ main:"Omelete de ovo com queijo branco derretido", fruit:"🍌 Banana em rodinhas" },
+        almoco:{ main:"Peixe em lascas com purê de batata-doce e brócolis cozido" },
+        lanche:{ main:"Abacate amassado com torrada integral", fruit:"🍓 Morango em pedaços" },
+        jantar:{ main:"Sopa de lentilha com legumes macios e um fio de azeite" }
+      },
+      {
+        day:"Quarta",
+        cafe:{ main:"Pão integral macio com queijo branco e abacate amassado", fruit:"🍎 Maçã em tirinhas macias" },
+        almoco:{ main:"Arroz, feijão amassado, frango desfiado e cenoura em cubinhos" },
+        lanche:{ main:"Iogurte natural com aveia", fruit:"🫐 Mirtilos inteiros (cortados)" },
+        jantar:{ main:"Omelete de legumes com abobrinha e cenoura ralada" }
+      },
+      {
+        day:"Quinta",
+        cafe:{ main:"Mingau de aveia com maçã cozida em cubinhos", fruit:"🍌 Banana em pedaços" },
+        almoco:{ main:"Carne bovina moída cozida com batata em cubos e vagem" },
+        lanche:{ main:"Queijo branco em cubinhos com torrada integral", fruit:"🍓 Morango em quartos" },
+        jantar:{ main:"Macarrão mole com ricota e espinafre refogado no azeite" }
+      },
+      {
+        day:"Sexta",
+        cafe:{ main:"Ovo mexido cremoso com queijo branco", fruit:"🍎 Maçã cozida em cubos" },
+        almoco:{ main:"Peixe cozido em lascas com arroz mole e ervilha" },
+        lanche:{ main:"Iogurte natural com banana amassada e aveia", fruit:"🫐 Mirtilos ao meio" },
+        jantar:{ main:"Sopa de frango com macarrão e legumes bem macios" }
+      },
+      {
+        day:"Sábado",
+        cafe:{ main:"Panqueca de banana e ovo (2 ingredientes)", fruit:"🍓 Morango em pedaços" },
+        almoco:{ main:"Frango desfiado com purê de mandioca e brócolis" },
+        lanche:{ main:"Torrada integral com abacate e queijo branco", fruit:"🍌 Banana em rodinhas" },
+        jantar:{ main:"Risoto de frango com cenoura e ervilha bem macio" }
+      },
+      {
+        day:"Domingo",
+        cafe:{ main:"Mingau de aveia com frutas vermelhas", fruit:"🍎 Maçã em tirinhas" },
+        almoco:{ main:"Arroz, feijão, carne moída e abobrinha refogada" },
+        lanche:{ main:"Iogurte natural com granola sem açúcar", fruit:"🫐 Mirtilos ao meio" },
+        jantar:{ main:"Macarrão integral com frango e molho de tomate caseiro" }
+      }
+    ],
+    "12-24": [
+      {
+        day:"Segunda",
+        cafe:{ main:"Pão integral com manteiga, ovo mexido e queijo branco", fruit:"🍓 Morango fresco em pedaços" },
+        almoco:{ main:"Arroz integral, feijão, carne bovina em cubos e salada de cenoura" },
+        lanche:{ main:"Iogurte natural com fruta e mel (a partir de 1 ano)", fruit:"🍌 Banana fatiada" },
+        jantar:{ main:"Frango grelhado com legumes variados no vapor e arroz" }
+      },
+      {
+        day:"Terça",
+        cafe:{ main:"Aveia com leite integral, banana e castanha triturada", fruit:"🍎 Maçã fatiada com casca" },
+        almoco:{ main:"Peixe grelhado com batata assada, brócolis e cenoura" },
+        lanche:{ main:"Torrada integral com pasta de abacate e queijo", fruit:"🍇 Uva sem semente cortada" },
+        jantar:{ main:"Sopa de legumes com frango desfiado e macarrão" }
+      },
+      {
+        day:"Quarta",
+        cafe:{ main:"Panqueca integral com ovo, banana e ricota", fruit:"🫐 Mirtilos frescos" },
+        almoco:{ main:"Arroz, lentilha, carne moída refogada e espinafre" },
+        lanche:{ main:"Iogurte natural com aveia e mel", fruit:"🍑 Pêssego em fatias" },
+        jantar:{ main:"Omelete de queijo com legumes e arroz integral" }
+      },
+      {
+        day:"Quinta",
+        cafe:{ main:"Pão integral com pasta de amendoim (sem adição) e banana", fruit:"🍓 Morangos frescos" },
+        almoco:{ main:"Macarrão integral ao sugo com almôndegas de frango" },
+        lanche:{ main:"Queijo branco com torrada e fruta fresca", fruit:"🥭 Manga em cubos" },
+        jantar:{ main:"Frango assado com batata-doce e vagem refogada" }
+      },
+      {
+        day:"Sexta",
+        cafe:{ main:"Ovos mexidos com queijo e torrada integral", fruit:"🍇 Uva cortada ao meio" },
+        almoco:{ main:"Arroz integral, feijão, peixe e salada colorida" },
+        lanche:{ main:"Vitamina de banana com leite e aveia", fruit:"🍍 Abacaxi em cubinhos" },
+        jantar:{ main:"Sopa cremosa de abóbora com frango e macarrão" }
+      },
+      {
+        day:"Sábado",
+        cafe:{ main:"Waffle de aveia com ovo, queijo e fruta fresca", fruit:"🍓 Morango fatiado" },
+        almoco:{ main:"Frango grelhado com risoto de legumes e ervilha" },
+        lanche:{ main:"Iogurte natural com granola e mel", fruit:"🥭 Manga em pedaços" },
+        jantar:{ main:"Pizza caseira integral com queijo, frango e tomate" }
+      },
+      {
+        day:"Domingo",
+        cafe:{ main:"Pão francês com ovo cozido, queijo e abacate", fruit:"🍌 Banana fatiada" },
+        almoco:{ main:"Arroz, feijão, carne bovina assada e salada variada" },
+        lanche:{ main:"Bolo simples de banana com aveia (sem açúcar refinado)", fruit:"🍇 Uva em metades" },
+        jantar:{ main:"Sopa de legumes com frango e macarrão ao azeite" }
+      }
+    ],
+  };
+
+  const recipes = [
+    // 6-8 meses
+    { id:1,  name:"Papa de abóbora",        age:"6-8",  meal:"almoco", time:"15 min", color:palette.peach,    emoji:"🎃",
+      steps:["Descasque e corte a abóbora em pedaços pequenos","Cozinhe no vapor ou em água até ficar bem macia","Amasse com um garfo até obter um purê liso","Adicione um fio de azeite extra virgem e sirva morno"] },
+    { id:2,  name:"Banana amassada",         age:"6-8",  meal:"cafe",   time:"5 min",  color:palette.lavender, emoji:"🍌",
+      steps:["Escolha uma banana bem madura — ficará mais doce naturalmente","Descasque e corte ao meio","Amasse com um garfo até obter consistência homogênea","Sirva imediatamente, pois a banana oxida rapidamente"] },
+    { id:3,  name:"Purê de batata-doce",     age:"6-8",  meal:"jantar", time:"20 min", color:palette.peach,    emoji:"🍠",
+      steps:["Cozinhe a batata-doce descascada em água até ficar bem macia","Escorra e amasse com um garfo ou espremedor","Adicione um fio de azeite e misture bem","Deixe esfriar um pouco antes de oferecer ao bebê"] },
+    { id:4,  name:"Papa de pera com aveia",  age:"6-8",  meal:"cafe",   time:"10 min", color:palette.sage,     emoji:"🍐",
+      steps:["Descasque e cozinhe a pera até ficar macia","Amasse bem com o garfo","Adicione uma colher de aveia fina e misture","Sirva em temperatura morna e adequada"] },
+    { id:5,  name:"Creme de abacate",        age:"6-8",  meal:"lanche", time:"5 min",  color:palette.sage,     emoji:"🥑",
+      steps:["Escolha um abacate maduro e cremoso","Retire a polpa com uma colher","Amasse com um garfo até ficar liso","Adicione algumas gotas de limão e sirva logo"] },
+    { id:6,  name:"Papa de inhame",          age:"6-8",  meal:"jantar", time:"20 min", color:palette.lavender, emoji:"🥔",
+      steps:["Descasque e corte o inhame em pedaços","Cozinhe em água até ficar completamente macio","Amasse muito bem, garantindo consistência suave","Finalize com azeite e sirva morno"] },
+    // 9-11 meses
+    { id:7,  name:"Frango com legumes",      age:"9-11", meal:"almoco", time:"25 min", color:palette.sage,     emoji:"🍗",
+      steps:["Cozinhe o frango em água até ficar bem macio","Desfie o frango em fios bem fininhos","Cozinhe cenoura e abobrinha até ficarem macias","Misture tudo e amasse levemente junto"] },
+    { id:8,  name:"Vitamina de frutas",      age:"9-11", meal:"lanche", time:"5 min",  color:palette.blush,    emoji:"🍓",
+      steps:["Escolha frutas maduras e frescas da estação","Bata no liquidificador com um pouco de leite materno","Não adicione açúcar — as frutas já adoçam naturalmente","Sirva gelado em copo ou colher"] },
+    { id:9,  name:"Mingau de aveia",         age:"9-11", meal:"cafe",   time:"8 min",  color:palette.warm,     emoji:"🥣",
+      steps:["Aqueça o leite materno em fogo baixo sem deixar ferver","Adicione a aveia fina aos poucos, mexendo sempre","Cozinhe por 3 a 4 minutos até engrossar","Sirva em temperatura morna, ideal para o bebê"] },
+    { id:10, name:"Omelete de queijo",       age:"9-11", meal:"cafe",   time:"10 min", color:palette.sky,      emoji:"🥚",
+      steps:["Bata 1 ovo inteiro em uma tigela pequena","Aqueça uma frigideira antiaderente em fogo baixo","Despeje o ovo e adicione queijo branco ralado","Vire com cuidado e sirva cortado em tiras para pegar"] },
+    { id:11, name:"Panqueca de banana",      age:"9-11", meal:"cafe",   time:"10 min", color:palette.blush,    emoji:"🥞",
+      steps:["Amasse bem 1 banana madura","Adicione 1 ovo inteiro e misture até ficar homogêneo","Cozinhe em frigideira antiaderente sem óleo","Vire quando as bordas estiverem firmes — fica uma massa fofinha!"] },
+    { id:12, name:"Sopa de lentilha",        age:"9-11", meal:"jantar", time:"30 min", color:palette.peach,    emoji:"🫘",
+      steps:["Lave bem a lentilha e reserve","Refogue cebola e alho no azeite em fogo baixo","Adicione a lentilha e cubra com água; cozinhe por 25 minutos","Amasse alguns grãos para deixar a sopa mais cremosa"] },
+    // 12-24 meses
+    { id:13, name:"Omelete simples",         age:"12-24", meal:"cafe",  time:"10 min", color:palette.sky,      emoji:"🥚",
+      steps:["Bata 2 ovos com uma pitada pequena de sal","Aqueça a frigideira antiaderente em fogo médio","Despeje os ovos e mexa levemente para criar textura","Vire com delicadeza e sirva com torrada integral"] },
+    { id:14, name:"Arroz à piamontesa",      age:"12-24", meal:"almoco",time:"20 min", color:palette.sage,     emoji:"🍚",
+      steps:["Cozinhe o arroz normalmente com pouco sal","Misture queijo branco ralado enquanto ainda está quente","Adicione ervilhas cozidas e mexa","Finalize com azeite — fica cremoso e delicioso!"] },
+    { id:15, name:"Pizza integral caseira",  age:"12-24", meal:"jantar",time:"30 min", color:palette.blush,    emoji:"🍕",
+      steps:["Use pão sírio integral como base prática","Espalhe molho de tomate caseiro sem sal","Adicione queijo branco e frango desfiado","Leve ao forno a 180°C por 10 minutos até gratinar"] },
+    { id:16, name:"Waffle de aveia",         age:"12-24", meal:"cafe",  time:"15 min", color:palette.peach,    emoji:"🧇",
+      steps:["Misture 1 xícara de aveia, 2 ovos e 1 banana amassada","Bata tudo até formar uma massa homogênea","Despeje na máquina de waffle ou frigideira","Sirva com fruta fresca picada por cima"] },
+    { id:17, name:"Almôndegas de frango",    age:"12-24", meal:"almoco",time:"25 min", color:palette.sky,      emoji:"🍖",
+      steps:["Tempere o frango moído com alho e ervas frescas","Molde bolinhas com as mãos úmidas","Cozinhe no vapor por 15 minutos ou até firmar","Sirva com macarrão integral e molho de tomate"] },
+    { id:18, name:"Bolo de banana sem açúcar", age:"12-24", meal:"lanche", time:"40 min", color:palette.lavender, emoji:"🍰",
+      steps:["Amasse 3 bananas maduras até virar um creme","Misture 2 ovos, 1 xícara de aveia e 1 colher de canela","Despeje em forma untada com azeite","Asse a 180°C por 30 minutos — palito sai limpo!"] },
+  ];
+
+  const tabs = [
+    { id:"home",    icon:"🏠", label:"Início" },
+    { id:"menu",    icon:"📅", label:"Cardápio" },
+    { id:"diary",   icon:"📓", label:"Diário" },
+    { id:"recipes", icon:"🍽", label:"Receitas" },
+    { id:"tips",    icon:"💡", label:"Dicas" },
+  ];
+
+  const days = ["Dom","Seg","Ter","Qua","Qui","Sex","Sáb"];
+
+  // ─── State ──────────────────────────────────────────────────────────────────
+  const today = new Date();
+  const LS_KEY = "mamae_bebe_state_v2";
+
+  function loadState() {
+    try {
+      const saved = localStorage.getItem(LS_KEY);
+      if (saved) return JSON.parse(saved);
+    } catch(e) {}
+    return null;
+  }
+
+  function saveState(s) {
+    try { localStorage.setItem(LS_KEY, JSON.stringify({ diary: s.diary, selectedAge: s.selectedAge })); } catch(e) {}
+  }
+
+  const saved = loadState();
+
+  let state = {
+    activeTab: "home",
+    selectedAge: saved?.selectedAge || "6-8",
+    selectedDay: today.getDay(),
+    diary: saved?.diary || {},
+    selectedMeal: null,
+    addingFood: false,
+    foodInput: "",
+    selectedRecipe: null,
+    filterAge: "all",
+    filterMeal: "all",
+    selectedWeekDay: 0,
+  };
+
+  // ─── Render ─────────────────────────────────────────────────────────────────
+  function render() {
+    saveState(state);
+    const app = document.getElementById("app");
+    app.innerHTML = "";
+    app.appendChild(buildHeader());
+    app.appendChild(buildContent());
+    if (state.addingFood) app.appendChild(buildModal());
+    app.appendChild(buildBottomNav());
+  }
+
+  function buildHeader() {
+    const names = { home:"Introdução 🍼", menu:"Cardápio 📅", diary:"Diário 📓", recipes:"Receitas 🍽", tips:"Dicas 💡" };
+    const ageInfo = ageTips[state.selectedAge];
+    const h = el("div","header");
+    h.innerHTML = `
+      <div class="header-circle1"></div>
+      <div class="header-circle2"></div>
+      <div class="header-row">
+        <div>
+          <p class="header-sub">MAMÃE & BEBÊ</p>
+          <h1 class="header-title">${names[state.activeTab]}</h1>
+        </div>
+        <div class="header-badge">${ageInfo.label}</div>
+      </div>`;
+    return h;
+  }
+
+  function buildContent() {
+    const wrap = el("div","content");
+    if (state.activeTab === "home")    wrap.appendChild(buildHome());
+    if (state.activeTab === "menu")    wrap.appendChild(buildMenu());
+    if (state.activeTab === "diary")   wrap.appendChild(buildDiary());
+    if (state.activeTab === "recipes") wrap.appendChild(buildRecipes());
+    if (state.activeTab === "tips")    wrap.appendChild(buildTips());
+    return wrap;
+  }
+
+  // ─── HOME ────────────────────────────────────────────────────────────────────
+  function buildHome() {
+    const frag = document.createDocumentFragment();
+    const ageInfo = ageTips[state.selectedAge];
+
+    frag.appendChild(sectionLabel("Selecione a idade do bebê"));
+    const scroll = el("div","age-scroll");
+    Object.entries(ageTips).forEach(([key, val]) => {
+      const btn = el("button","age-pill");
+      btn.textContent = val.label;
+      btn.style.background = state.selectedAge === key ? val.color : "#fff";
+      btn.style.color = state.selectedAge === key ? "#fff" : palette.mid;
+      btn.style.boxShadow = state.selectedAge === key ? `0 4px 12px ${val.color}88` : "0 2px 8px rgba(0,0,0,0.06)";
+      btn.style.border = `2px solid ${state.selectedAge === key ? val.color : "transparent"}`;
+      btn.onclick = () => { state.selectedAge = key; render(); };
+      scroll.appendChild(btn);
+    });
+    frag.appendChild(scroll);
+
+    frag.appendChild(sectionLabel("O que saber nessa fase"));
+    const grid = el("div","tip-grid");
+    ageInfo.tips.forEach((tip, i) => {
+      const card = el("div","tip-card card");
+      card.style.borderLeft = `4px solid ${ageInfo.color}`;
+      card.style.animationDelay = `${i * 0.05}s`;
+      card.innerHTML = `<p>${tip}</p>`;
+      grid.appendChild(card);
+    });
+    frag.appendChild(grid);
+
+    if (ageInfo.foods.length > 0) {
+      frag.appendChild(sectionLabel("Alimentos liberados nessa fase"));
+      const foodsCard = el("div","foods-card");
+      const pillsWrap = el("div","food-pills");
+      ageInfo.foods.forEach(f => {
+        const s = el("span","food-pill");
+        s.textContent = f;
+        s.style.background = `${ageInfo.color}22`;
+        pillsWrap.appendChild(s);
+      });
+      foodsCard.appendChild(pillsWrap);
+      frag.appendChild(foodsCard);
+    }
+
+    frag.appendChild(sectionLabel("Receitas ideais para essa fase"));
+    const rscroll = el("div","recipe-scroll");
+    const ageRecipes = recipes.filter(r => r.age === state.selectedAge);
+    if (ageRecipes.length === 0) {
+      const msg = el("p","only-milk"); msg.textContent = "Somente leite nessa fase 🍼";
+      rscroll.appendChild(msg);
+    } else {
+      ageRecipes.forEach(recipe => {
+        const btn = el("button","recipe-mini");
+        btn.style.borderTop = `4px solid ${recipe.color}`;
+        btn.innerHTML = `<div class="recipe-mini-emoji">${recipe.emoji}</div>
+          <p class="recipe-mini-name">${recipe.name}</p>
+          <p class="recipe-mini-sub">${mealLabels[recipe.meal]} · ${recipe.time}</p>`;
+        btn.onclick = () => { state.selectedRecipe = recipe; state.activeTab = "recipes"; render(); };
+        rscroll.appendChild(btn);
+      });
+    }
+    frag.appendChild(rscroll);
+
+    return frag;
+  }
+
+  // ─── WEEKLY MENU ─────────────────────────────────────────────────────────────
+  function buildMenu() {
+    const frag = document.createDocumentFragment();
+    const menuData = weeklyMenus[state.selectedAge];
+
+    // Info card se não há cardápio
+    if (!menuData) {
+      const info = el("div","foods-card");
+      info.innerHTML = `<p style="font-size:13px;font-weight:700;color:var(--mid);text-align:center;padding:12px">
+        🍼 Nessa fase o bebê se alimenta exclusivamente de leite materno.<br><br>
+        O cardápio semanal estará disponível a partir dos 6 meses.
+      </p>`;
+      frag.appendChild(info);
+      return frag;
+    }
+
+    // Age selector dentro do cardápio
+    frag.appendChild(sectionLabel("Fase do bebê"));
+    const scroll = el("div","age-scroll");
+    Object.entries(ageTips).forEach(([key, val]) => {
+      const btn = el("button","age-pill");
+      btn.textContent = val.label;
+      btn.style.background = state.selectedAge === key ? val.color : "#fff";
+      btn.style.color = state.selectedAge === key ? "#fff" : palette.mid;
+      btn.style.boxShadow = state.selectedAge === key ? `0 4px 12px ${val.color}88` : "0 2px 8px rgba(0,0,0,0.06)";
+      btn.style.border = `2px solid ${state.selectedAge === key ? val.color : "transparent"}`;
+      btn.onclick = () => { state.selectedAge = key; state.selectedWeekDay = 0; render(); };
+      scroll.appendChild(btn);
+    });
+    frag.appendChild(scroll);
+
+    // Day tabs
+    frag.appendChild(sectionLabel("Dia da semana"));
+    const weekTabs = el("div","week-tabs");
+    weekDayNames.forEach((d, i) => {
+      const btn = el("button","week-tab");
+      btn.textContent = d;
+      const isSelected = state.selectedWeekDay === i;
+      btn.style.background = isSelected ? ageTips[state.selectedAge].color : "#fff";
+      btn.style.color = isSelected ? "#fff" : palette.mid;
+      btn.style.boxShadow = isSelected ? `0 4px 12px ${ageTips[state.selectedAge].color}66` : "0 2px 8px rgba(0,0,0,0.05)";
+      btn.style.border = `2px solid ${isSelected ? ageTips[state.selectedAge].color : "transparent"}`;
+      btn.onclick = () => { state.selectedWeekDay = i; render(); };
+      weekTabs.appendChild(btn);
+    });
+    frag.appendChild(weekTabs);
+
+    const dayMenu = menuData[state.selectedWeekDay];
+    if (!dayMenu) return frag;
+
+    const ageColor = ageTips[state.selectedAge].color;
+
+    const mealsOrder = [
+      { key:"cafe",   icon:"🌅", label:"Café da Manhã" },
+      { key:"almoco", icon:"☀️", label:"Almoço" },
+      { key:"lanche", icon:"🍎", label:"Lanche da Tarde" },
+      { key:"jantar", icon:"🌙", label:"Jantar" },
+    ];
+
+    mealsOrder.forEach(meal => {
+      const data = dayMenu[meal.key];
+      if (!data) return;
+
+      const card = el("div","menu-card card");
+      card.style.borderLeft = `5px solid ${ageColor}`;
+
+      const titleEl = el("div","menu-meal-title");
+      titleEl.innerHTML = `<span class="menu-meal-icon">${meal.icon}</span>${meal.label}`;
+      card.appendChild(titleEl);
+
+      const mainEl = el("div","menu-item");
+      mainEl.textContent = data.main;
+      card.appendChild(mainEl);
+
+      if (data.fruit) {
+        const fruitEl = el("div","menu-fruit");
+        fruitEl.innerHTML = `🍃 Sugestão de fruta: ${data.fruit}`;
+        card.appendChild(fruitEl);
+      }
+
+      frag.appendChild(card);
+    });
+
+    return frag;
+  }
+
+  // ─── DIARY ───────────────────────────────────────────────────────────────────
+  function buildDiary() {
+    const frag = document.createDocumentFragment();
+    const diaryKey = String(state.selectedDay);
+    const dayMeals = state.diary[diaryKey] || { cafe:[], almoco:[], lanche:[], jantar:[] };
+
+    const daysRow = el("div","days-row");
+    days.forEach((d, i) => {
+      const isToday = i === today.getDay();
+      const isSelected = state.selectedDay === i;
+      const btn = el("button","day-btn");
+      btn.textContent = d;
+      btn.style.background = isSelected ? palette.peach : "#fff";
+      btn.style.color = isSelected ? "#fff" : palette.mid;
+      btn.style.boxShadow = isSelected ? `0 4px 12px ${palette.peach}66` : "0 2px 8px rgba(0,0,0,0.05)";
+      btn.style.border = isToday && !isSelected ? `2px solid ${palette.peach}` : "2px solid transparent";
+      btn.onclick = () => { state.selectedDay = i; render(); };
+      daysRow.appendChild(btn);
+    });
+    frag.appendChild(daysRow);
+
+    const mealsOrder = ["cafe","almoco","lanche","jantar"];
+    mealsOrder.forEach(meal => {
+      const icon = mealIcons[meal];
+      const card = el("div","meal-card card");
+      const header = el("div","meal-header");
+      const titleRow = el("div","meal-title-row");
+      titleRow.innerHTML = `<span style="font-size:22px">${icon}</span><p class="meal-title">${mealLabels[meal]}</p>`;
+      const addBtn = el("button","add-btn");
+      addBtn.textContent = "+";
+      addBtn.onclick = () => { state.selectedMeal = meal; state.addingFood = true; render(); };
+      header.appendChild(titleRow);
+      header.appendChild(addBtn);
+      card.appendChild(header);
+
+      const foods = dayMeals[meal] || [];
+      if (foods.length === 0) {
+        const msg = el("p","empty-msg"); msg.textContent = "Nenhum alimento registrado ainda";
+        card.appendChild(msg);
+      } else {
+        const wrap = el("div","food-tags-wrap");
+        foods.forEach((food, idx) => {
+          const tag = el("span","food-tag");
+          tag.innerHTML = `${food}<button class="remove-btn">×</button>`;
+          tag.querySelector("button").onclick = () => {
+            const key = String(state.selectedDay);
+            const existing = state.diary[key] || { cafe:[], almoco:[], lanche:[], jantar:[] };
+            existing[meal] = existing[meal].filter((_,i) => i !== idx);
+            state.diary = { ...state.diary, [key]: existing };
+            render();
+          };
+          wrap.appendChild(tag);
+        });
+        card.appendChild(wrap);
+      }
+      frag.appendChild(card);
+    });
+
+    return frag;
+  }
+
+  // ─── RECIPES ─────────────────────────────────────────────────────────────────
+  function buildRecipes() {
+    if (state.selectedRecipe) return buildRecipeDetail();
+
+    const frag = document.createDocumentFragment();
+
+    const ageLabel = el("p","section-label"); ageLabel.textContent = "Filtrar por idade"; ageLabel.style.marginTop="0";
+    frag.appendChild(ageLabel);
+    const ageFilter = el("div","filter-row");
+    ageFilter.style.marginBottom = "12px";
+    [["all","Todas"], ...Object.entries(ageTips).map(([k,v])=>[k,v.label])].forEach(([key,label]) => {
+      const btn = el("button","filter-pill");
+      btn.textContent = label;
+      btn.style.background = state.filterAge === key ? palette.dark : "#fff";
+      btn.style.color = state.filterAge === key ? "#fff" : palette.mid;
+      btn.onclick = () => { state.filterAge = key; render(); };
+      ageFilter.appendChild(btn);
+    });
+    frag.appendChild(ageFilter);
+
+    const mealLabel = el("p","section-label"); mealLabel.textContent = "Filtrar por refeição";
+    frag.appendChild(mealLabel);
+    const mealFilter = el("div","filter-row");
+    mealFilter.style.marginBottom = "16px";
+    [["all","Todas"], ...Object.entries(mealIcons).map(([k,v])=>[k, v+" "+mealLabels[k]])].forEach(([key,label]) => {
+      const btn = el("button","filter-pill");
+      btn.textContent = label;
+      btn.style.background = state.filterMeal === key ? palette.peach : "#fff";
+      btn.style.color = state.filterMeal === key ? "#fff" : palette.mid;
+      btn.onclick = () => { state.filterMeal = key; render(); };
+      mealFilter.appendChild(btn);
+    });
+    frag.appendChild(mealFilter);
+
+    const filtered = recipes.filter(r =>
+      (state.filterAge === "all" || r.age === state.filterAge) &&
+      (state.filterMeal === "all" || r.meal === state.filterMeal)
+    );
+
+    if (filtered.length === 0) {
+      const div = el("div","no-results");
+      div.innerHTML = `<p class="no-results-emoji">🔍</p><p class="no-results-text">Nenhuma receita encontrada para esse filtro</p>`;
+      frag.appendChild(div);
+    } else {
+      filtered.forEach((recipe, i) => {
+        const btn = el("button","recipe-row card");
+        btn.style.borderLeft = `5px solid ${recipe.color}`;
+        btn.style.animationDelay = `${i*0.05}s`;
+        btn.innerHTML = `
+          <span class="recipe-row-emoji">${recipe.emoji}</span>
+          <div style="flex:1">
+            <p class="recipe-row-name">${recipe.name}</p>
+            <p class="recipe-row-sub">${mealIcons[recipe.meal]} ${mealLabels[recipe.meal]} · ⏱ ${recipe.time} · 👶 ${ageTips[recipe.age].label}</p>
+          </div>
+          <span class="recipe-arrow">›</span>`;
+        btn.onclick = () => { state.selectedRecipe = recipe; render(); };
+        frag.appendChild(btn);
+      });
+    }
+
+    return frag;
+  }
+
+  function buildRecipeDetail() {
+    const r = state.selectedRecipe;
+    const frag = document.createDocumentFragment();
+
+    const backBtn = el("button","back-btn");
+    backBtn.textContent = "‹ Voltar para receitas";
+    backBtn.onclick = () => { state.selectedRecipe = null; render(); };
+    frag.appendChild(backBtn);
+
+    const card = el("div","recipe-detail-card");
+    card.style.borderTop = `6px solid ${r.color}`;
+    card.innerHTML = `
+      <div class="recipe-detail-center">
+        <span class="recipe-detail-emoji">${r.emoji}</span>
+        <h2 class="recipe-detail-name">${r.name}</h2>
+        <p class="recipe-detail-sub">${mealIcons[r.meal]} ${mealLabels[r.meal]} · ⏱ ${r.time} · 👶 ${ageTips[r.age].label}</p>
+      </div>`;
+
+    const stepsLabel = el("p","section-label"); stepsLabel.textContent = "Modo de preparo";
+    card.appendChild(stepsLabel);
+
+    r.steps.forEach((step, i) => {
+      const row = el("div","step-row");
+      const num = el("span","step-num");
+      num.style.background = r.color;
+      num.textContent = i + 1;
+      const txt = el("p","step-text"); txt.textContent = step;
+      row.appendChild(num); row.appendChild(txt);
+      card.appendChild(row);
+    });
+
+    const addBtn = el("button","add-diary-btn");
+    addBtn.textContent = "📓 Adicionar ao diário de hoje";
+    addBtn.onclick = () => {
+      const key = String(today.getDay());
+      const existing = state.diary[key] || { cafe:[], almoco:[], lanche:[], jantar:[] };
+      existing[r.meal] = [...existing[r.meal], r.name];
+      state.diary = { ...state.diary, [key]: existing };
+      state.activeTab = "diary";
+      state.selectedRecipe = null;
+      render();
+    };
+    card.appendChild(addBtn);
+    frag.appendChild(card);
+
+    return frag;
+  }
+
+  // ─── TIPS ────────────────────────────────────────────────────────────────────
+  function buildTips() {
+    const frag = document.createDocumentFragment();
+
+    const avoidCard = el("div","avoid-card");
+    avoidCard.innerHTML = `<p style="font-size:22px;margin-bottom:6px">⚠️</p><p class="avoid-title">Evite sempre — em qualquer fase</p>`;
+    const avoidPills = el("div","avoid-pills");
+    [
+      "Mel antes de 1 ano","Sal e açúcar","Leite de vaca antes de 1 ano",
+      "Embutidos e frios","Refrigerantes","Suco de caixinha",
+      "Frituras","Ultraprocessados","Mel de abelha < 1a","Amendoim inteiro"
+    ].forEach(f => {
+      const s = el("span","avoid-pill"); s.textContent = f; avoidPills.appendChild(s);
+    });
+    avoidCard.appendChild(avoidPills);
+    frag.appendChild(avoidCard);
+
+    [
+      { title:"Sinais de prontidão", emoji:"✅", color:palette.sage,
+        items:["Sustenta bem a cabeça","Senta com apoio","Demonstra interesse pela comida","Coordena mão e boca"] },
+      { title:"Textura por fase", emoji:"🥣", color:palette.sky,
+        items:["6 meses: bem amassado","8 meses: pastoso grosso","10 meses: pedaços macios","12 meses+: igual à família"] },
+      { title:"Horários ideais", emoji:"⏰", color:palette.lavender,
+        items:["Café da manhã: 7–8h","Almoço: 11–12h","Lanche da tarde: 14–15h","Jantar: 18–19h"] },
+      { title:"Sinais de saciedade", emoji:"🍼", color:palette.peach,
+        items:["Desvia a cabeça para o lado","Fecha a boca firmemente","Empurra a colher","Distrai-se facilmente"] },
+      { title:"Dicas de apresentação", emoji:"🎨", color:palette.blush,
+        items:["Cores variadas no prato","Texturas diferentes","Mesmo alimento várias vezes","Coma junto com o bebê"] },
+    ].forEach((section, si) => {
+      const card = el("div","tips-card card");
+      card.style.animationDelay = `${si*0.07}s`;
+      const header = el("div","tips-card-header");
+      header.innerHTML = `<span style="font-size:22px">${section.emoji}</span><p class="tips-card-title">${section.title}</p>`;
+      card.appendChild(header);
+      const grid = el("div","tips-grid");
+      section.items.forEach(item => {
+        const d = el("div","tips-item");
+        d.style.background = `${section.color}22`;
+        d.style.borderLeftColor = section.color;
+        d.innerHTML = `<p>${item}</p>`;
+        grid.appendChild(d);
+      });
+      card.appendChild(grid);
+      frag.appendChild(card);
+    });
+
+    return frag;
+  }
+
+  // ─── MODAL ───────────────────────────────────────────────────────────────────
+  function buildModal() {
+    const overlay = el("div","modal-overlay");
+    overlay.onclick = () => { state.addingFood = false; state.foodInput = ""; render(); };
+    const box = el("div","modal-box");
+    box.onclick = e => e.stopPropagation();
+    box.innerHTML = `
+      <p class="modal-title">${mealIcons[state.selectedMeal]} Adicionar ao ${mealLabels[state.selectedMeal]}</p>
+      <p class="modal-sub">O que o bebê comeu nessa refeição?</p>
+      <input class="modal-input" placeholder="Ex: Banana amassada, Frango desfiado..." value="${state.foodInput}" id="food-input" />
+      <div class="modal-btns">
+        <button class="modal-cancel" id="modal-cancel">Cancelar</button>
+        <button class="modal-save" id="modal-save">Salvar</button>
+      </div>`;
+    overlay.appendChild(box);
+
+    setTimeout(() => {
+      const input = document.getElementById("food-input");
+      if (input) {
+        input.focus();
+        input.oninput = e => { state.foodInput = e.target.value; };
+        input.onkeydown = e => { if (e.key === "Enter") saveFood(); };
+      }
+      const cancelBtn = document.getElementById("modal-cancel");
+      if (cancelBtn) cancelBtn.onclick = () => { state.addingFood = false; state.foodInput = ""; render(); };
+      const saveBtn = document.getElementById("modal-save");
+      if (saveBtn) saveBtn.onclick = saveFood;
+    }, 0);
+
+    return overlay;
+  }
+
+  function saveFood() {
+    const input = document.getElementById("food-input");
+    const val = (input ? input.value : state.foodInput).trim();
+    if (!val) return;
+    const key = String(state.selectedDay);
+    const existing = state.diary[key] || { cafe:[], almoco:[], lanche:[], jantar:[] };
+    existing[state.selectedMeal] = [...(existing[state.selectedMeal]||[]), val];
+    state.diary = { ...state.diary, [key]: existing };
+    state.addingFood = false;
+    state.foodInput = "";
+    render();
+  }
+
+  // ─── BOTTOM NAV ──────────────────────────────────────────────────────────────
+  function buildBottomNav() {
+    const nav = el("div","bottom-nav");
+    tabs.forEach(tab => {
+      const isActive = state.activeTab === tab.id;
+      const btn = el("button","nav-btn" + (isActive ? " active" : ""));
+      btn.innerHTML = `
+        <span class="nav-icon ${isActive ? "" : "inactive"}">${tab.icon}</span>
+        <span class="nav-label" style="color:${isActive ? palette.peach : palette.mid}">${tab.label}</span>
+        ${isActive ? '<div class="nav-dot"></div>' : ""}`;
+      btn.onclick = () => {
+        state.activeTab = tab.id;
+        if (tab.id !== "recipes") state.selectedRecipe = null;
+        render();
+      };
+      nav.appendChild(btn);
+    });
+    return nav;
+  }
+
+  // ─── Helpers ─────────────────────────────────────────────────────────────────
+  function el(tag, className) {
+    const e = document.createElement(tag);
+    if (className) e.className = className;
+    return e;
+  }
+  function sectionLabel(text) {
+    const p = el("p","section-label"); p.textContent = text; return p;
+  }
+
+  // ─── Init ────────────────────────────────────────────────────────────────────
+  render();
+  </script>
+</body>
+</html>
