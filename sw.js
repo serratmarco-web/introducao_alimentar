@@ -1,8 +1,8 @@
-const CACHE = "mamae-bebe-v3";
+const CACHE = "mamae-bebe-v2";
 const ASSETS = [
-  ".",
-  "index.html",
-  "manifest.json",
+  "/introducao_alimentar/",
+  "/introducao_alimentar/index.html",
+  "/introducao_alimentar/manifest.json",
   "https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@700;800&display=swap"
 ];
 
